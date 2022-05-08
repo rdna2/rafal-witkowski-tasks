@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1/tasks")
+@CrossOrigin("*")
 @RequiredArgsConstructor
 public class TaskController {
 
@@ -28,15 +29,13 @@ public class TaskController {
     @GetMapping(value="{taskId}")
     public ResponseEntity<TaskDto> getTask(@PathVariable Long taskId) throws TaskNotFoundException{
         return ResponseEntity.ok(taskMapper.mapToTaskDto(service.getTask(taskId)));
-            }
+    }
 
     @DeleteMapping(value="{taskId}")
     public ResponseEntity <Void> deleteTask(@PathVariable Long taskId) {
         service.deleteTask(taskId);
         return ResponseEntity.ok().build();
     }
-
-
 
     @PutMapping
     public ResponseEntity<TaskDto> updateTask(@RequestBody TaskDto taskDto) {
