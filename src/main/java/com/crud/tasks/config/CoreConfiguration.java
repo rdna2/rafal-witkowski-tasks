@@ -24,6 +24,7 @@ public class CoreConfiguration {
         return new RestTemplate();
     }
 
+    //ZADANIE 23.2
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
