@@ -12,19 +12,22 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class EmailScheduler {
 
-    private static final String SUBJECT = "Tasks: Once a day email";
+    private final static String SUBJECT = "Tasks: Once a day email";
     private final SimpleEmailService simpleEmailService;
     private final TaskRepository taskRepository;
     private final AdminConfig adminConfig;
 
-    @Scheduled(cron = "0 0 10 * * *")
+    //@Scheduled(fixedDelay = 10000)
+    @Scheduled(cron = "0 0 14 * * *")
     public void sendInformationEmail() {
         long size = taskRepository.count();
-        simpleEmailService.send(
+        String taskOrTasks = (size==1)? " task" : " tasks";
+
+        simpleEmailService.sendScheduledMail(
                 new Mail(
                         adminConfig.getAdminMail(),
                         SUBJECT,
-                        "Currently in database you got: " + size + (size==1 ? " task" : " tasks"),
+                        "Currently in database you got: " + size + taskOrTasks,
                         null
                 )
         );
